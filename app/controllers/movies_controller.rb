@@ -11,8 +11,8 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sort_by = params[:sort_by]
-    @movies = Movie.order(sort_by)
+    @sort_by = params[:sort_by]
+    @movies = Movie.order(@sort_by)
   end
 
   def new
