@@ -11,16 +11,23 @@ class MoviesController < ApplicationController
   end
 
   def index
+  
+    # See line 6 of index.html  
     @all_ratings = Movie.all_ratings
     
-    @sort_by = params[:sort_by]
-    ratings = params[:ratings]
+    @sort_by = params.fetch(:sort_by, session[:sort_by])
+    ratings = params.fetch(:ratings, session[:ratings])
+    
+    session[:sort_by] = @sort_by
+    session[:ratings] = ratings
     
     if ratings.nil?
-      @movies = Movie.order(@sort_by)
+      #@movies = Movie.order(@sort_by)
+      redirect_to movies_path({ratings: Hash[@all_ratings.map {|x| [x, 1]}]})
     else
       @movies = Movie.where(rating: ratings.keys).order(@sort_by)
     end
+    
   end
 
   def new
