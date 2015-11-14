@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
     @ratings = params[:ratings]
     
     if @sort_by.nil? || @ratings.nil?
-      params[:sort_by] = session.fetch(:sort_by, "title") if @sort_by.nil?
+      params[:sort_by] = session.fetch(:sort_by, :title) if @sort_by.nil?
       params[:ratings] = session.fetch(:ratings, Hash[@all_ratings.map {|x| [x, 1]}]) if @ratings.nil?
       redirect_to movies_path(params)
     else
